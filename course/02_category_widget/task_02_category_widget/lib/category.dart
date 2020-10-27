@@ -15,8 +15,20 @@ class Category extends StatelessWidget {
   ///
   /// A [Category] saves the name of the Category (e.g. 'Length'), its color for
   /// the UI, and the icon that represents it (e.g. a ruler).
-  // TODO: You'll need the name, color, and iconLocation from main.dart
-  const Category();
+
+  const Category(
+      {Key key,
+      @required this.name,
+      @required this.color,
+      @required this.iconLocation})
+      : assert(name != null),
+        assert(color != null),
+        assert(iconLocation != null),
+        super(key: key);
+
+  final String name;
+  final ColorSwatch color;
+  final IconData iconLocation;
 
   /// Builds a custom widget that shows [Category] information.
   ///
@@ -27,7 +39,43 @@ class Category extends StatelessWidget {
   // Theme ancestor in the tree. Below, we obtain the display1 text theme.
   // See https://docs.flutter.io/flutter/material/Theme-class.html
   Widget build(BuildContext context) {
-    // TODO: Build the custom widget here, referring to the Specs.
-    return Container();
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        height: 100.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50.0),
+            onTap: () {
+              print('I was tapped!');
+            },
+            splashColor: this.color,
+            highlightColor: this.color,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(
+                      this.iconLocation,
+                      size: 60.0,
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      this.name,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
